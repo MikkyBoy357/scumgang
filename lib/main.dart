@@ -31,14 +31,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,20 +40,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Container(
-              height: 50,
-              color: MyColors.blue4,
-            ),
-            Buttons.button1,
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            Buttons.disabledWhiteButton1,
+            Buttons.disabledWhiteButton2,
+            Buttons.disabledWhiteButton3,
           ],
         ),
       ),
