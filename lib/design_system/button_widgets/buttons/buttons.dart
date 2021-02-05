@@ -1,177 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:saydo/design_system/buttons/white_buttons/white_button1.dart';
+import 'package:saydo/design_system/buttons/white_buttons/white_button2.dart';
+import 'package:saydo/design_system/buttons/white_buttons/white_button3.dart';
 import 'package:saydo/design_system/colors/colors.dart';
+
+import 'blue_buttons/button1.dart';
+import 'blue_buttons/button2.dart';
+import 'blue_buttons/button3.dart';
+import 'light_blue_buttons/light_blue_button1.dart';
+import 'light_blue_buttons/light_blue_button2.dart';
+import 'light_blue_buttons/light_blue_button3.dart';
 
 class Buttons {
   // -----------------------------------------
 
   // Blue Buttons
-  static Widget button1 = SizedBox(
-    height: 60,
-    width: 343,
-    child: RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        // side: BorderSide(color: Colors.red),
-      ),
-      onPressed: () {},
-      color: MyColors.blue1,
-      textColor: Colors.white,
-      child: Text(
-        "Button",
-        style: TextStyle(fontSize: 20),
-      ),
-    ),
-  );
+  static Widget button1 = Button1();
 
-  static Widget button2 = SizedBox(
-    height: 60,
-    width: 243,
-    child: RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        // side: BorderSide(color: Colors.red),
-      ),
-      onPressed: () {},
-      color: MyColors.blue1,
-      textColor: Colors.white,
-      child: Text(
-        "Button",
-        style: TextStyle(fontSize: 20),
-      ),
-    ),
-  );
+  static Widget button2 = Button2();
 
-  static Widget button3 = SizedBox(
-    height: 60,
-    width: 143,
-    child: RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        // side: BorderSide(color: Colors.red),
-      ),
-      onPressed: () {},
-      color: MyColors.blue1,
-      textColor: Colors.white,
-      child: Text(
-        "Button",
-        style: TextStyle(fontSize: 20),
-      ),
-    ),
-  );
+  static Widget button3 = Button3();
 
   // -----------------------------------------
 
   // lightBlue Buttons
-  static Widget lightButton1 = SizedBox(
-    height: 60,
-    width: 343,
-    child: RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        // side: BorderSide(color: Colors.red),
-      ),
-      onPressed: () {},
-      color: MyColors.blue5,
-      textColor: Colors.white,
-      child: Text(
-        "Button",
-        style: TextStyle(fontSize: 20, color: MyColors.blue1),
-      ),
-    ),
-  );
+  static Widget lightButton1 = LightButton1();
 
-  static Widget lightButton2 = SizedBox(
-    height: 60,
-    width: 243,
-    child: RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        // side: BorderSide(color: Colors.red),
-      ),
-      onPressed: () {},
-      color: MyColors.blue5,
-      textColor: MyColors.blue1,
-      child: Text(
-        "Button",
-        style: TextStyle(fontSize: 20),
-      ),
-    ),
-  );
+  static Widget lightButton2 = LightButton2();
 
-  static Widget lightButton3 = SizedBox(
-    height: 60,
-    width: 143,
-    child: RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        // side: BorderSide(color: Colors.red),
-      ),
-      onPressed: () {},
-      color: MyColors.blue5,
-      textColor: MyColors.blue1,
-      child: Text(
-        "Button",
-        style: TextStyle(fontSize: 20),
-      ),
-    ),
-  );
+  static Widget lightButton3 = LightButton3();
 
   // -----------------------------------------
 
   // white Buttons
-  static Widget whiteButton1 = SizedBox(
-    height: 60,
-    width: 343,
-    child: RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        side: BorderSide(color: Color(0xFFE6E6E6)),
-      ),
-      onPressed: () {},
-      color: Colors.white,
-      textColor: Colors.white,
-      child: Text(
-        "Button",
-        style: TextStyle(fontSize: 20, color: MyColors.blue1),
-      ),
-    ),
-  );
+  static Widget whiteButton1 = WhiteButton1();
 
-  static Widget whiteButton2 = SizedBox(
-    height: 60,
-    width: 243,
-    child: RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        side: BorderSide(color: Color(0xFFE6E6E6)),
-      ),
-      onPressed: () {},
-      color: Colors.white,
-      textColor: Colors.white,
-      child: Text(
-        "Button",
-        style: TextStyle(fontSize: 20, color: MyColors.blue1),
-      ),
-    ),
-  );
+  static Widget whiteButton2 = WhiteButton2();
 
-  static Widget whiteButton3 = SizedBox(
-    height: 60,
-    width: 143,
-    child: RaisedButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        side: BorderSide(color: Color(0xFFE6E6E6)),
-      ),
-      onPressed: () {},
-      color: Colors.white,
-      textColor: Colors.white,
-      child: Text(
-        "Button",
-        style: TextStyle(fontSize: 20, color: MyColors.blue1),
-      ),
-    ),
-  );
+  static Widget whiteButton3 = WhiteButton3();
 
   // -----------------------------------------
 
