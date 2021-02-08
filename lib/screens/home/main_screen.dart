@@ -1,19 +1,36 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:saydo/design_system/widgets/bottom_bar.dart';
 import 'package:saydo/design_system/widgets/search_bar.dart';
+import 'package:saydo/screens/home/components/category_card.dart';
+
+import '../category_view.dart';
+import '../filter_screen.dart';
+import '../search_screen.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         iconTheme: IconThemeData(color: Colors.black),
-        // elevation: 0,
+        elevation: 0,
         backgroundColor: Colors.white,
         title: SearchBar(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return Search();
+                },
+              ),
+            );
+            print('search');
+          },
           hintText: 'Search',
           icon: Icon(
             CupertinoIcons.search,
@@ -23,28 +40,40 @@ class Home extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
-            child: Text(
-              'Filter',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+            child: GestureDetector(
+              child: Text(
+                'Filter',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return Filter();
+                    },
+                  ),
+                );
+              },
             ),
           ),
           Container(width: 10),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 0, left: 20, right: 20),
         child: Column(
           children: [
+            // Container(
+            //   color: Colors.red,
+            //   height: 100,
+            // ),
             Container(
-              color: Colors.red,
-              height: 100,
-            ),
-            Container(
-              height: 60,
+              height: 30,
               child: Row(
                 children: [
                   Text(
@@ -67,21 +96,20 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
+            Container(height: 10),
+
             Expanded(
-              child: GridView.builder(
-                // physics: NeverScrollableScrollPhysics(),
-                itemCount: 4,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 2,
-                  crossAxisSpacing: 20,
-                  childAspectRatio: 0.75,
-                ),
-                itemBuilder: (context, index) => Container(
-                  height: 20,
-                  width: 20,
-                  color: Colors.red,
-                ),
+              child: CategoryCard(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return CategoryView();
+                      },
+                    ),
+                  );
+                },
               ),
             ),
           ],
