@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/colors/colors.dart';
 import 'package:saydo/design_system/widgets/cart_item_cards/cart_item.dart';
+import 'package:saydo/screens/cart/waiting_for_order.dart';
 
 class Cart extends StatelessWidget {
   @override
@@ -37,13 +38,11 @@ class Cart extends StatelessWidget {
                 // ignore: missing_return
                 itemBuilder: (context, index) {
                   // return CartItem();
-                  if (index != 0) {
-                    return CartItem();
-                  } else {
+                  if (index == 0) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20.0),
                       child: Text(
-                        'Category',
+                        'Cart',
                         style: TextStyle(
                           color: MyColors.black2,
                           fontSize: 36,
@@ -51,6 +50,8 @@ class Cart extends StatelessWidget {
                         ),
                       ),
                     );
+                  } else {
+                    return CartItem();
                   }
                 },
               ),
@@ -92,7 +93,16 @@ class Cart extends StatelessWidget {
               ),
               Button1(
                 label: 'Confirm Order',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return WaitingForOrders();
+                      },
+                    ),
+                  );
+                },
               ),
             ],
           ),

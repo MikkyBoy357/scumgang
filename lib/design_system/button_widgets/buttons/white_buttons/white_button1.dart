@@ -23,7 +23,11 @@ class WhiteButton1 extends StatelessWidget {
         textColor: Colors.white,
         child: Text(
           label,
-          style: TextStyle(fontSize: 20, color: MyColors.blue1),
+          style: TextStyle(
+            fontSize: 20,
+            color: MyColors.black1,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

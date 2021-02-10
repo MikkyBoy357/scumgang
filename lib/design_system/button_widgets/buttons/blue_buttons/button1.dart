@@ -3,9 +3,11 @@ import 'package:saydo/design_system/colors/colors.dart';
 
 class Button1 extends StatelessWidget {
   final String label;
+  final Function onPressed;
   const Button1({
     Key key,
     this.label,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class Button1 extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.0),
           // side: BorderSide(color: Colors.red),
         ),
-        onPressed: () {},
+        onPressed: onPressed,
         color: MyColors.blue1,
         textColor: Colors.white,
         child: Text(

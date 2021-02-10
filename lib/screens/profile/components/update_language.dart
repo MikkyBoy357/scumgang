@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/button_widgets/buttons/white_buttons/white_button1.dart';
-import 'package:saydo/screens/login_screen.dart';
 
-class LanguageScreen extends StatefulWidget {
-  @override
-  _LanguageScreenState createState() => _LanguageScreenState();
-}
-
-class _LanguageScreenState extends State<LanguageScreen> {
-  // List<bool> _selections = List.generate(3, (index) => false);
+class UpdateLanguage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +28,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               Button1(
                 label: 'English',
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return LoginScreen();
-                      },
-                    ),
-                  );
+                  Navigator.pop(context);
                 },
               ),
             ],

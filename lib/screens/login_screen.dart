@@ -1,0 +1,125 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
+import 'package:saydo/design_system/colors/colors.dart';
+
+import 'number_verification.dart';
+
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController _controller = TextEditingController();
+  var phoneNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Please enter your mobile number',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              Container(
+                height: 30,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: 50,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: '+964',
+                        hintStyle: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  Container(
+                    width: 30,
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: 'Phone Number',
+                        hintStyle:
+                            TextStyle(fontSize: 18, color: Colors.grey[500]),
+                      ),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                height: 50,
+              ),
+              Button1(
+                label: 'Next',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        phoneNumber = _controller.text;
+                        return NumberVerification(
+                          phoneNumber: phoneNumber,
+                        );
+                      },
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 20.0, bottom: 20.0),
+        child: Row(
+          children: [
+            GestureDetector(
+              child: Text(
+                'Click here ',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: MyColors.blue1,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return NumberVerification();
+                    },
+                  ),
+                );
+              },
+            ),
+            Text(
+              'to register if you are new to Saydo',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
