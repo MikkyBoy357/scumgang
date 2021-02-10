@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:saydo/design_system/colors/colors.dart';
 import 'package:saydo/design_system/text_styles/text_styles.dart';
 import 'package:saydo/models/profile.dart';
-import 'package:saydo/screens/profile/components/update_name.dart';
+import 'package:saydo/screens/language_screen.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -89,7 +89,7 @@ class Profile extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return UpdateName();
+                          return LanguageScreen();
                         },
                       ),
                     );
