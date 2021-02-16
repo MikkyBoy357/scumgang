@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:saydo/screens/profile/components/update_language.dart';
+import 'package:saydo/screens/profile/components/update_location.dart';
 import 'package:saydo/screens/profile/components/update_name.dart';
 import 'package:saydo/screens/profile/components/update_phone_number.dart';
 import 'package:saydo/screens/profile/components/update_store_name.dart';
@@ -35,7 +36,7 @@ List<ProfileTile> profileTiles = [
   ProfileTile(
     title: 'Location',
     subtitle: 'Rzgari, Erbil - Iraq',
-    page: UpdateName(),
+    page: UpdateLocation(),
   ),
   ProfileTile(
     title: 'Store Name',
