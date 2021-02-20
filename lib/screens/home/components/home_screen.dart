@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:saydo/design_system/widgets/search_bar.dart';
 import 'package:saydo/design_system/widgets/category_card.dart';
 
-import '../../category_view.dart';
+import 'category_view.dart';
 import '../../filter_screen.dart';
 import '../../search_screen.dart';
 

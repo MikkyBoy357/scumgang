@@ -14,10 +14,12 @@ class AddToCart extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
-              height: 190,
-              width: 190,
+              height: MediaQuery.of(context).size.height / 5,
+              width: MediaQuery.of(context).size.width / 2.7,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16),
+                ),
                 image: DecorationImage(
                   image: AssetImage('images/image.png'),
                   fit: BoxFit.cover,
@@ -72,7 +74,7 @@ class AddToCart extends StatelessWidget {
                           Text(
                             'X',
                             style: TextStyle(
-                              fontSize: 48,
+                              fontSize: 35,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

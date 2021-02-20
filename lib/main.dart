@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:saydo/screens/language_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:saydo/login.dart';
+import 'package:saydo/screens/language_screen.dart';
+
+import 'home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +27,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      // home: LoginScreen(),
       home: LanguageScreen(),
     );
   }

@@ -67,44 +67,39 @@ class Profile extends StatelessWidget {
                     },
                   ),
                 ),
-                Container(
-                  height: 10,
-                ),
               ],
             ),
           ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SizedBox(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    // side: BorderSide(color: Colors.red),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return LanguageScreen();
-                        },
-                      ),
-                    );
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: SizedBox(
+          height: 50,
+          width: MediaQuery.of(context).size.width,
+          child: RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              // side: BorderSide(color: Colors.red),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return LanguageScreen();
                   },
-                  color: MyColors.red1,
-                  textColor: Colors.white,
-                  child: Text(
-                    'Sign Out',
-                    style: TextStyle(fontSize: 20),
-                  ),
                 ),
-              ),
+              );
+            },
+            color: MyColors.red1,
+            textColor: Colors.white,
+            child: Text(
+              'Sign Out',
+              style: TextStyle(fontSize: 20),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

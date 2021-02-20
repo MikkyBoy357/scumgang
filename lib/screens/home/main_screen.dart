@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:saydo/design_system/widgets/bottom_bar.dart';
@@ -12,7 +13,15 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedItem = 0;
+  String uid;
   PageController _pageController = PageController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    uid = FirebaseAuth.instance.currentUser.uid;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

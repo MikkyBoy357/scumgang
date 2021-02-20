@@ -28,7 +28,10 @@ class CategoryView extends StatelessWidget {
                       onTap: () {
                         return showModalBottomSheet(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
+                            ),
                           ),
                           context: context,
                           builder: (BuildContext context) {

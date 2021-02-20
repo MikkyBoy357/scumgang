@@ -11,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController _countryCodeController = TextEditingController();
   TextEditingController _controller = TextEditingController();
   var phoneNumber;
 
@@ -38,9 +39,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     width: 50,
                     child: TextField(
+                      controller: _countryCodeController,
+                      maxLength: 3,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        hintText: '+964',
-                        hintStyle: TextStyle(fontSize: 18, color: Colors.black),
+                        counterText: '',
+                        hintText: '964',
+                        hintStyle:
+                            TextStyle(fontSize: 18, color: Colors.grey[500]),
                       ),
                       style: TextStyle(fontSize: 20),
                     ),
@@ -51,7 +57,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Expanded(
                     child: TextField(
                       controller: _controller,
+                      maxLength: 10,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
+                        counterText: '',
                         hintText: 'Phone Number',
                         hintStyle:
                             TextStyle(fontSize: 18, color: Colors.grey[500]),
@@ -70,17 +79,25 @@ class _LoginScreenState extends State<LoginScreen> {
               Button1(
                 label: 'Next',
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        phoneNumber = _controller.text;
-                        return NumberVerification(
-                          phoneNumber: phoneNumber,
-                        );
-                      },
-                    ),
-                  );
+                  if (_countryCodeController.text.isNotEmpty &
+                      _controller.text.isNotEmpty) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          phoneNumber =
+                              '+${_countryCodeController.text}${_controller.text}';
+                          return NumberVerification(
+                            phoneNumber: phoneNumber,
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    return SnackBar(
+                      content: Text('Invalid Phone Number'),
+                    );
+                  }
                 },
               )
             ],

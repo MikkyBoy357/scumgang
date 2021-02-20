@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "269150891635",
+    "project_id": "saydo-6f792",
+    "storage_bucket": "saydo-6f792.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269150891635:android:0cefebc3bedd9f3aa2c406",
+        "android_client_info": {
+          "package_name": "com.mikkyboy.saydo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269150891635-t1ms7lbt989uangh7aj9s9iriqes2ika.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrPCGpXp1GwRUbHAUXltFOM0cvGcsqNSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269150891635-t1ms7lbt989uangh7aj9s9iriqes2ika.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "269150891635-um2h2dks8clcijrd497hf92kkqjf0cat.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mikkyboy.saydo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
