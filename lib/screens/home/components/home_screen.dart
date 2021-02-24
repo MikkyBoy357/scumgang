@@ -1,13 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:saydo/design_system/widgets/search_bar.dart';
+import 'package:saydo/design_system/widgets/brand_card.dart';
 import 'package:saydo/design_system/widgets/category_card.dart';
-
-import 'category_view.dart';
+import 'package:saydo/design_system/widgets/search_bar.dart';
+import 'package:saydo/screens/home/components/pageviews/brand_view.dart';
 import '../../filter_screen.dart';
 import '../../search_screen.dart';
+import 'pageviews/category_view.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  var selectedItem = 'Category';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,49 +81,134 @@ class Home extends StatelessWidget {
         padding: const EdgeInsets.only(top: 0, left: 20, right: 20),
         child: Column(
           children: [
-            // Container(
-            //   color: Colors.red,
-            //   height: 100,
-            // ),
             Container(
               height: 30,
               child: Row(
                 children: [
-                  Text(
-                    'Category',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedItem = 'Category';
+                        print(selectedItem);
+                      });
+                    },
+                    child: Text(
+                      'Category',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: selectedItem == 'Category'
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                   Container(width: 20),
-                  Text(
-                    'Brand',
-                    style: TextStyle(
-                      color: Colors.grey[500],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedItem = 'Brand';
+                        print(selectedItem);
+                      });
+                    },
+                    child: Text(
+                      'Brand',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: selectedItem == 'Brand'
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
             Container(height: 10),
-
-            Expanded(
-              child: CategoryCard(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return CategoryView();
+            Container(
+              child: selectedItem == 'Category'
+                  ? StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('categories')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData)
+                          return Center(child: CircularProgressIndicator());
+                        return Expanded(
+                          child: GridView.builder(
+                            itemCount: snapshot.data.docs.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 20,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 0.85,
+                            ),
+                            itemBuilder: (context, index) {
+                              return CategoryCard(
+                                categoryName: snapshot.data.docs[index]
+                                    ['categoryName'],
+                                image: snapshot.data.docs[index]['image'],
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return CategoryView(
+                                          categoryName: snapshot
+                                              .data.docs[index]['categoryName'],
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        );
                       },
+                    )
+                  : Expanded(
+                      child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('brands')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData)
+                            return Center(child: CircularProgressIndicator());
+                          return GridView.builder(
+                            itemCount: snapshot.data.docs.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 20,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 0.85,
+                            ),
+                            itemBuilder: (context, index) {
+                              return BrandCard(
+                                brandName: snapshot.data.docs[index]
+                                    ['brandName'],
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return BrandView(
+                                          brandName: snapshot.data.docs[index]
+                                              ['brandName'],
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
-                  );
-                },
-              ),
             ),
           ],
         ),

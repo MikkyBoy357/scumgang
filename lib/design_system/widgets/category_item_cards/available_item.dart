@@ -39,7 +39,7 @@ class AvailableItem extends StatelessWidget {
               child: Container(
                 // color: Colors.red,
                 height: MediaQuery.of(context).size.height / 10,
-                width: MediaQuery.of(context).size.width / 2,
+                width: MediaQuery.of(context).size.width / 2.3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,

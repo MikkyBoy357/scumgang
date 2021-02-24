@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:saydo/design_system/widgets/bottom_bar.dart';
@@ -19,7 +18,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    uid = FirebaseAuth.instance.currentUser.uid;
+    // uid = FirebaseAuth.instance.currentUser.uid;
   }
 
   @override
