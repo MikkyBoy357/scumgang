@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 class BrandCard extends StatelessWidget {
   final Function onPressed;
   final String brandName;
+  final String image;
 
-  const BrandCard({Key key, this.onPressed, this.brandName}) : super(key: key);
+  const BrandCard({Key key, this.onPressed, this.brandName, this.image})
+      : super(key: key);
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
@@ -31,7 +33,7 @@ class BrandCard extends StatelessWidget {
                   // ),
                   borderRadius: BorderRadius.all(Radius.circular(16)),
                   image: DecorationImage(
-                    image: AssetImage('images/image.png'),
+                    image: NetworkImage(image),
                     fit: BoxFit.cover,
                   ),
                 ),

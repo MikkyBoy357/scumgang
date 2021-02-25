@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         iconTheme: IconThemeData(color: Colors.black),
@@ -190,6 +190,7 @@ class _HomeState extends State<Home> {
                               return BrandCard(
                                 brandName: snapshot.data.docs[index]
                                     ['brandName'],
+                                image: snapshot.data.docs[index]['image'],
                                 onPressed: () {
                                   Navigator.push(
                                     context,
