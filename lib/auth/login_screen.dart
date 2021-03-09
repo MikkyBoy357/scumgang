@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/colors/colors.dart';
 
-import 'number_verification.dart';
+import '../screens/number_verification.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
