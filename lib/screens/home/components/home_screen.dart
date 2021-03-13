@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:saydo/design_system/const.dart';
 import 'package:saydo/design_system/widgets/brand_card.dart';
 import 'package:saydo/design_system/widgets/category_card.dart';
 import 'package:saydo/design_system/widgets/search_bar.dart';
@@ -10,6 +12,7 @@ import '../../search_screen.dart';
 import 'pageviews/category_view.dart';
 
 class Home extends StatefulWidget {
+  static var uid = FirebaseAuth.instance.currentUser.uid;
   @override
   _HomeState createState() => _HomeState();
 }
@@ -21,10 +24,12 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print('========> User ID: ${Home.uid} <=======');
   }
 
   @override
   Widget build(BuildContext context) {
+    print('=======> UID: ${Const.uid}');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

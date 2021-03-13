@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:saydo/auth/login_screen.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/colors/colors.dart';
-
-import 'home/main_screen.dart';
+import 'package:saydo/screens/home/main_screen.dart';
 
 class NumberVerification extends StatefulWidget {
   final phoneNumber;
@@ -39,6 +39,14 @@ class _NumberVerificationState extends State<NumberVerification> {
             .then((value) {
           if (value.user != null) {
             print('User Logged In');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return MainScreen();
+                },
+              ),
+            );
           }
         });
       },
@@ -204,7 +212,7 @@ class _NumberVerificationState extends State<NumberVerification> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return MainScreen();
+                          return LoginScreen();
                         },
                       ),
                     );

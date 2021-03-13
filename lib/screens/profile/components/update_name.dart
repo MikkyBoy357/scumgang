@@ -1,14 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 
-class UpdateName extends StatefulWidget {
-  @override
-  _UpdateNameState createState() => _UpdateNameState();
-}
+import '../../../home.dart';
 
-class _UpdateNameState extends State<UpdateName> {
-  var phoneNumber;
-
+class UpdateName extends StatelessWidget {
+  String name;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +45,11 @@ class _UpdateNameState extends State<UpdateName> {
                 Container(
                   width: MediaQuery.of(context).size.width / 1.5,
                   child: TextField(
-                    maxLength: 6,
+                    // maxLength: 6,
+                    onChanged: (value) {
+                      name = value;
+                      print('name: $name');
+                    },
                     // textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       counterText: '',
@@ -71,6 +74,28 @@ class _UpdateNameState extends State<UpdateName> {
         child: Button1(
           label: 'Update',
           onPressed: () {
+            DocumentReference documentReference = FirebaseFirestore.instance
+                .collection("users")
+                .doc(FirebaseAuth.instance.currentUser.uid);
+            print('=========> RANDOM LOG HAHAHAHAHA');
+            Map<String, String> categories = {
+              "name": name,
+            };
+            print("=======> Firestore Mapping");
+            print(categories.toString());
+            documentReference.set(categories).whenComplete(
+              () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CupertinoAlertDialog(
+                      title: Text('SUCCESS'),
+                      content: Text('$name Added Successfully'),
+                    );
+                  },
+                );
+              },
+            );
             Navigator.pop(context);
           },
         ),

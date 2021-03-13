@@ -1,13 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/colors/colors.dart';
+import 'package:saydo/design_system/const.dart';
+import 'package:saydo/screens/cart/cart_screen.dart';
 
-class AddToCart extends StatelessWidget {
+import '../main_screen.dart';
+
+class AddToCart extends StatefulWidget {
+  final String name;
+  final String size;
+  final String price;
+  final String image;
+
+  const AddToCart({Key key, this.name, this.size, this.price, this.image})
+      : super(key: key);
+
+  @override
+  _AddToCartState createState() => _AddToCartState();
+}
+
+class _AddToCartState extends State<AddToCart> {
+  int units = 10;
+  int price = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    price = int.parse(widget.price);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
@@ -21,27 +49,29 @@ class AddToCart extends StatelessWidget {
                   Radius.circular(16),
                 ),
                 image: DecorationImage(
-                  image: AssetImage('images/image.png'),
+                  image: widget.image == ''
+                      ? AssetImage('images/image.png')
+                      : NetworkImage(widget.image),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             Text(
-              'Item Title',
+              widget.name,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'Size',
+              widget.size,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'Price',
+              'IQD $price',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -72,16 +102,19 @@ class AddToCart extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            'X',
+                            '$units',
                             style: TextStyle(
                               fontSize: 35,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          Container(
+                            width: 10,
+                          ),
                           Text(
-                            'Units',
+                            units > 1 ? 'Units' : 'Unit',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -91,13 +124,35 @@ class AddToCart extends StatelessWidget {
                     Container(
                       child: Row(
                         children: [
-                          Icon(
-                            CupertinoIcons.minus_circled,
-                            size: 40,
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                units > 1 ? units = units - 1 : units = units;
+                                print('$units Units');
+                                price = int.parse(widget.price) * units;
+                              });
+                            },
+                            child: Icon(
+                              CupertinoIcons.minus_circled,
+                              size: 40,
+                            ),
                           ),
-                          Icon(
-                            CupertinoIcons.plus_circled,
-                            size: 40,
+                          Container(
+                            width: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                units <= 99 ? units++ : units = units;
+                                print('$units Units');
+                                price = int.parse(widget.price) * units;
+                                print('Price $price');
+                              });
+                            },
+                            child: Icon(
+                              CupertinoIcons.plus_circled,
+                              size: 40,
+                            ),
                           ),
                         ],
                       ),
@@ -109,7 +164,38 @@ class AddToCart extends StatelessWidget {
             ),
             Button1(
               label: 'Add to Cart',
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  DocumentReference documentReference = FirebaseFirestore
+                      .instance
+                      .collection("cartItems")
+                      .doc("${Const.uid} ${DateTime.now()}");
+                  print('=========> RANDOM LOG HAHAHAHAHA');
+                  Map<String, dynamic> categories = {
+                    "name": widget.name,
+                    "size": widget.size,
+                    "price": price,
+                    "image": widget.image,
+                    "units": units,
+                    "uid": Const.uid,
+                  };
+                  print("=======> Firestore Mapping");
+                  print(categories.toString());
+                  documentReference.set(categories).whenComplete(
+                    () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CupertinoAlertDialog(
+                            title: Text('SUCCESS'),
+                            content: Text('${widget.name} Added Successfully'),
+                          );
+                        },
+                      );
+                    },
+                  );
+                });
+              },
             ),
             Container(
               height: 5,

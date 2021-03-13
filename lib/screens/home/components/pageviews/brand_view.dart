@@ -38,6 +38,7 @@ class BrandView extends StatelessWidget {
                   .where('brandId', isEqualTo: brandName.toLowerCase())
                   .snapshots(),
               builder: (context, snapshot) {
+                print(brandName);
                 if (!snapshot.hasData)
                   return Center(child: CircularProgressIndicator());
                 return Expanded(
@@ -55,7 +56,8 @@ class BrandView extends StatelessWidget {
                             ),
                             elevation: 4.0,
                             child: Container(
-                              height: 96,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.130,
                               decoration: BoxDecoration(
                                 border: Border.all(color: Color(0x90707070)),
                                 borderRadius:
@@ -64,69 +66,116 @@ class BrandView extends StatelessWidget {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    height: 96,
-                                    width: 96,
-                                    decoration: BoxDecoration(
-                                      // border: Border.all(
-                                      //   color: Color(0x90707070),
-                                      // ),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(16)),
-                                      image: DecorationImage(
-                                        image: AssetImage('images/image.png'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    // child: Image(
-                                    //   image: AssetImage('images/image.png'),
-                                    // ),
-                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(2.0),
                                     child: Container(
-                                      // color: Colors.red,
                                       height:
-                                          MediaQuery.of(context).size.height /
-                                              10,
-                                      width: MediaQuery.of(context).size.width /
-                                          2.3,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Text(
-                                                snapshot.data.docs[index]
-                                                    ['name'],
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            'Size',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                            ),
-                                          ),
-                                        ],
+                                          MediaQuery.of(context).size.height *
+                                              0.120,
+                                      width:
+                                          MediaQuery.of(context).size.height *
+                                              0.106,
+                                      decoration: BoxDecoration(
+                                        // border: Border.all(
+                                        //   color: Color(0x90707070),
+                                        // ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(16)),
+                                        image: DecorationImage(
+                                          image: snapshot.data.docs[index]
+                                                      ['image'] ==
+                                                  ''
+                                              ? AssetImage('images/image.png')
+                                              : NetworkImage(snapshot
+                                                  .data.docs[index]['image']),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
+                                      // child: Image(
+                                      //   image: AssetImage('images/image.png'),
+                                      // ),
                                     ),
                                   ),
-                                  Text(
-                                    'Price',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Container(
+                                        // color: Colors.red,
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                9,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.3,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  snapshot.data.docs[index]
+                                                      ['name'],
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  maxLines: 2,
+                                                ),
+                                              ],
+                                            ),
+                                            Container(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  snapshot.data.docs[index]
+                                                              ['size'] ==
+                                                          ''
+                                                      ? 'Size'
+                                                      : snapshot.data
+                                                          .docs[index]['size'],
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                  ),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'IQD ',
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      snapshot.data.docs[index]
+                                                                  ['price'] ==
+                                                              ''
+                                                          ? 'Price'
+                                                          : snapshot.data
+                                                                  .docs[index]
+                                                              ['price'],
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -150,7 +199,12 @@ class BrandView extends StatelessWidget {
                                   minChildSize: 0.95,
                                   builder: (BuildContext context,
                                       ScrollController scrollController) {
-                                    return AddToCart();
+                                    return AddToCart(
+                                      name: snapshot.data.docs[index]['name'],
+                                      size: snapshot.data.docs[index]['size'],
+                                      price: snapshot.data.docs[index]['price'],
+                                      image: snapshot.data.docs[index]['image'],
+                                    );
                                   },
                                 );
                               },

@@ -18,7 +18,6 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // uid = FirebaseAuth.instance.currentUser.uid;
   }
 
   @override

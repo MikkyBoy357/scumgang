@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:saydo/auth/login_screen.dart';
 import 'package:saydo/screens/home/main_screen.dart';
 
 import 'home.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // home: LoginScreen(),
-      home: MainScreen(),
+      home: LoginScreen(),
     );
   }
 }

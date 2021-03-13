@@ -25,8 +25,8 @@ class BrandCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 120,
-                width: 120,
+                height: MediaQuery.of(context).size.height * 0.130,
+                width: MediaQuery.of(context).size.height * 0.130,
                 decoration: BoxDecoration(
                   // border: Border.all(
                   //   color: Color(0x90707070),

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/colors/colors.dart';
 
-import '../screens/number_verification.dart';
+import 'number_verification.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -104,39 +104,39 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 20.0, bottom: 20.0),
-        child: Row(
-          children: [
-            GestureDetector(
-              child: Text(
-                'Click here ',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: MyColors.blue1,
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return NumberVerification();
-                    },
-                  ),
-                );
-              },
-            ),
-            Text(
-              'to register if you are new to Saydo',
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Padding(
+      //   padding: const EdgeInsets.only(left: 20.0, bottom: 20.0),
+      //   child: Row(
+      //     children: [
+      //       GestureDetector(
+      //         child: Text(
+      //           'Click here ',
+      //           style: TextStyle(
+      //             fontSize: 16,
+      //             fontWeight: FontWeight.bold,
+      //             color: MyColors.blue1,
+      //           ),
+      //         ),
+      //         onTap: () {
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(
+      //               builder: (context) {
+      //                 return NumberVerification();
+      //               },
+      //             ),
+      //           );
+      //         },
+      //       ),
+      //       Text(
+      //         'to register if you are new to Saydo',
+      //         style: TextStyle(
+      //           fontSize: 16,
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
