@@ -5,14 +5,20 @@ class CartItem extends StatelessWidget {
   final String size;
   final int price;
   final String image;
+  final String orderedTime;
   final int units;
 
   const CartItem(
-      {Key key, this.name, this.size, this.price, this.image, this.units})
+      {Key key,
+      this.name,
+      this.size,
+      this.price,
+      this.image,
+      this.units,
+      this.orderedTime})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print('$units');
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),

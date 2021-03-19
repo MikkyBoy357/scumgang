@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:saydo/design_system/colors/colors.dart';
 
+import '../../app_localizations.dart';
+
 class BottomBar extends StatelessWidget {
   final int currentIndex;
   final Function onTap;
@@ -20,15 +22,15 @@ class BottomBar extends StatelessWidget {
       selectedItemColor: MyColors.blue1,
       items: [
         BottomNavigationBarItem(
-          label: 'Home',
+          label: AppLocalizations.of(context).translate('home'),
           icon: Icon(Icons.home),
         ),
         BottomNavigationBarItem(
-          label: 'Cart',
+          label: AppLocalizations.of(context).translate('cart'),
           icon: Icon(Icons.shopping_cart),
         ),
         BottomNavigationBarItem(
-          label: 'Profile',
+          label: AppLocalizations.of(context).translate('profile'),
           icon: Icon(CupertinoIcons.profile_circled),
         ),
       ],

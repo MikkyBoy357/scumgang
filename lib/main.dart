@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:saydo/auth/login_screen.dart';
-import 'package:saydo/screens/home/main_screen.dart';
+import 'package:saydo/auth/number_verification.dart';
+import 'package:saydo/screens/language_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'home.dart';
+import 'app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,8 +29,27 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      supportedLocales: [
+        Locale('en', 'UK'),
+        Locale('ku', 'IQ'),
+        Locale('ar', 'SA'),
+      ],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        for (var supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == locale.languageCode &&
+              supportedLocale.countryCode == locale.countryCode) {
+            return supportedLocale;
+          }
+        }
+        return supportedLocales.first;
+      },
       // home: LoginScreen(),
-      home: LoginScreen(),
+      home: NumberVerification(),
     );
   }
 }

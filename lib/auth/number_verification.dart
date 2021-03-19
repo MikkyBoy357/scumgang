@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:saydo/app_localizations.dart';
 import 'package:saydo/auth/login_screen.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/colors/colors.dart';
@@ -63,7 +64,7 @@ class _NumberVerificationState extends State<NumberVerification> {
           _verificationCode = verificationID;
         });
       },
-      timeout: Duration(seconds: 60),
+      timeout: Duration(minutes: 5),
     );
   }
 
@@ -90,7 +91,7 @@ class _NumberVerificationState extends State<NumberVerification> {
             Column(
               children: [
                 Text(
-                  'Please enter the verification code sent to',
+                  AppLocalizations.of(context).translate('enter_otp'),
                   style: TextStyle(
                     fontSize: 19,
                   ),
@@ -174,7 +175,7 @@ class _NumberVerificationState extends State<NumberVerification> {
                   height: 50,
                 ),
                 Button1(
-                  label: 'Log In',
+                  label: AppLocalizations.of(context).translate('login'),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -190,7 +191,7 @@ class _NumberVerificationState extends State<NumberVerification> {
                   height: 20,
                 ),
                 Text(
-                  'Didn\'t receive your code?',
+                  AppLocalizations.of(context).translate('no_otp'),
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -200,7 +201,7 @@ class _NumberVerificationState extends State<NumberVerification> {
                 ),
                 GestureDetector(
                   child: Text(
-                    'Press here to resend code',
+                    AppLocalizations.of(context).translate('resend_otp'),
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -208,14 +209,7 @@ class _NumberVerificationState extends State<NumberVerification> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return LoginScreen();
-                        },
-                      ),
-                    );
+                    Navigator.pop(context);
                   },
                 ),
               ],

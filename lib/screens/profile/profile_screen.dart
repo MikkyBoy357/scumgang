@@ -2,16 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:saydo/app_localizations.dart';
 import 'package:saydo/auth/login_screen.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
-import 'package:saydo/design_system/colors/colors.dart';
 import 'package:saydo/design_system/const.dart';
 import 'package:saydo/design_system/text_styles/text_styles.dart';
 import 'package:saydo/design_system/widgets/profile_text_field.dart';
 import 'package:saydo/screens/home/main_screen.dart';
-import 'package:saydo/screens/language_screen.dart';
-
-import '../../home.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -59,7 +56,7 @@ class _ProfileState extends State<Profile> {
         automaticallyImplyLeading: false,
         elevation: 0,
         title: Text(
-          'Profile',
+          AppLocalizations.of(context).translate('profile'),
           style: TextStyle(color: Colors.black),
         ),
         actions: [
@@ -108,7 +105,7 @@ class _ProfileState extends State<Profile> {
                           children: [
                             ListTile(
                               title: Text(
-                                'Name',
+                                AppLocalizations.of(context).translate('name'),
                                 style: MyTextStyles.profileTitle,
                               ),
                               subtitle: ProfileTextField(
@@ -121,7 +118,8 @@ class _ProfileState extends State<Profile> {
                             ),
                             ListTile(
                               title: Text(
-                                'Phone Number',
+                                AppLocalizations.of(context)
+                                    .translate('phone_number'),
                                 style: MyTextStyles.profileTitle,
                               ),
                               subtitle: ProfileTextField(
@@ -134,7 +132,8 @@ class _ProfileState extends State<Profile> {
                             ),
                             ListTile(
                               title: Text(
-                                'Language',
+                                AppLocalizations.of(context)
+                                    .translate('language'),
                                 style: MyTextStyles.profileTitle,
                               ),
                               subtitle: ProfileTextField(
@@ -147,7 +146,8 @@ class _ProfileState extends State<Profile> {
                             ),
                             ListTile(
                               title: Text(
-                                'Location',
+                                AppLocalizations.of(context)
+                                    .translate('location'),
                                 style: MyTextStyles.profileTitle,
                               ),
                               subtitle: ProfileTextField(
@@ -160,7 +160,8 @@ class _ProfileState extends State<Profile> {
                             ),
                             ListTile(
                               title: Text(
-                                'Store Name',
+                                AppLocalizations.of(context)
+                                    .translate('store_name'),
                                 style: MyTextStyles.profileTitle,
                               ),
                               subtitle: ProfileTextField(
@@ -178,7 +179,7 @@ class _ProfileState extends State<Profile> {
                         children: [
                           ListTile(
                             title: Text(
-                              'Name',
+                              AppLocalizations.of(context).translate('name'),
                               style: MyTextStyles.profileTitle,
                             ),
                             subtitle: ProfileTextField(
@@ -193,7 +194,8 @@ class _ProfileState extends State<Profile> {
                           ),
                           ListTile(
                             title: Text(
-                              'Phone Number',
+                              AppLocalizations.of(context)
+                                  .translate('phone_number'),
                               style: MyTextStyles.profileTitle,
                             ),
                             subtitle: ProfileTextField(
@@ -208,7 +210,8 @@ class _ProfileState extends State<Profile> {
                           ),
                           ListTile(
                             title: Text(
-                              'Language',
+                              AppLocalizations.of(context)
+                                  .translate('language'),
                               style: MyTextStyles.profileTitle,
                             ),
                             subtitle: ProfileTextField(
@@ -223,7 +226,8 @@ class _ProfileState extends State<Profile> {
                           ),
                           ListTile(
                             title: Text(
-                              'Location',
+                              AppLocalizations.of(context)
+                                  .translate('location'),
                               style: MyTextStyles.profileTitle,
                             ),
                             subtitle: ProfileTextField(
@@ -238,7 +242,8 @@ class _ProfileState extends State<Profile> {
                           ),
                           ListTile(
                             title: Text(
-                              'Store Name',
+                              AppLocalizations.of(context)
+                                  .translate('store_name'),
                               style: MyTextStyles.profileTitle,
                             ),
                             subtitle: ProfileTextField(
@@ -264,7 +269,7 @@ class _ProfileState extends State<Profile> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Button1(
-          label: 'Update Profile',
+          label: AppLocalizations.of(context).translate('update_profile'),
           onPressed: () {
             if (name.isNotEmpty &&
                 phoneNumber.isNotEmpty &&

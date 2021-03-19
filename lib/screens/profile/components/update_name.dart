@@ -4,12 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 
-import '../../../home.dart';
-
 class UpdateName extends StatelessWidget {
-  String name;
   @override
   Widget build(BuildContext context) {
+    String name;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

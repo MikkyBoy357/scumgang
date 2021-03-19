@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saydo/app_localizations.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/button_widgets/buttons/white_buttons/white_button1.dart';
 import 'package:saydo/auth/login_screen.dart';
@@ -21,7 +22,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                'Choose your language',
+                AppLocalizations.of(context).translate('choose_language'),
                 style: TextStyle(
                   fontSize: 20,
                 ),

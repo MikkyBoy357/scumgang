@@ -24,12 +24,11 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('========> User ID: ${Home.uid} <=======');
+    print('=======> UID: ${Const.uid}');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('=======> UID: ${Const.uid}');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

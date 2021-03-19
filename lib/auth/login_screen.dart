@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
-import 'package:saydo/design_system/colors/colors.dart';
 
+import '../app_localizations.dart';
 import 'number_verification.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Please enter your mobile number',
+                AppLocalizations.of(context).translate('mobile_number'),
                 style: TextStyle(
                   fontSize: 20,
                 ),
@@ -61,7 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         counterText: '',
-                        hintText: 'Phone Number',
+                        hintText: AppLocalizations.of(context)
+                            .translate('phone_number'),
                         hintStyle:
                             TextStyle(fontSize: 18, color: Colors.grey[500]),
                       ),

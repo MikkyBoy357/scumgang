@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 
 class UpdateStoreName extends StatelessWidget {
-  String storeName;
-
   @override
   Widget build(BuildContext context) {
+    String storeName;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

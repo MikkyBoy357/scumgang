@@ -1,21 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/colors/colors.dart';
 import 'package:saydo/design_system/const.dart';
-import 'package:saydo/screens/cart/cart_screen.dart';
-
-import '../main_screen.dart';
 
 class AddToCart extends StatefulWidget {
+  final String adminId;
   final String name;
   final String size;
   final String price;
   final String image;
 
-  const AddToCart({Key key, this.name, this.size, this.price, this.image})
+  const AddToCart(
+      {Key key, this.name, this.size, this.price, this.image, this.adminId})
       : super(key: key);
 
   @override
@@ -35,6 +33,7 @@ class _AddToCartState extends State<AddToCart> {
 
   @override
   Widget build(BuildContext context) {
+    print('AdminId: ${widget.adminId}');
     return Container(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -177,7 +176,9 @@ class _AddToCartState extends State<AddToCart> {
                     "price": price,
                     "image": widget.image,
                     "units": units,
+                    "ordered": 'false',
                     "uid": Const.uid,
+                    "adminId": widget.adminId,
                   };
                   print("=======> Firestore Mapping");
                   print(categories.toString());
