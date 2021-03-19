@@ -1,7 +1,20 @@
 {
-  "choose_language": "Zimanê xwe hilbijêrin",
-  "mobile_number": "Ji kerema xwe hejmara telefona xwe binivîse",
-  "phone_number": "Jimare telefon",
-  "enter_otp": "Ji kerema xwe koda pejirandinê ya ku ji we re hatî şandin binivîsin",
-  "login": "Têkevin"
+  "choose_language": "زمانێك هەلبژێرە",
+  "mobile_number": "تکایە ژمارەی مۆبایلەکەت بنووسە",
+  "phone_number": "ژمارەی مۆبایل",
+  "enter_otp": "تکایە ئەو کۆدە بنووسە کە بۆمان ناردی",
+  "login": "چونە ژوورەوە",
+  "total": "کۆی گشتی",
+  "confirm_order": "داواکاریەکت بنێرە",
+  "waiting_for_order": "چاوەرێی داواکاری",
+  "update_profile": "پرۆفایلت نوێ بکەوە",
+  "no_otp": "کۆدەکەت بۆ نەهات؟",
+  "resend_otp": "ئێرە داگرە بۆ ناردنەوەی کۆدەکە",
+  "home": "ماڵ",
+  "cart": "سەبەتە",
+  "profile": "پرۆفایل",
+  "name": "ناو",
+  "language": "زمان",
+  "location": "شوێن",
+  "store_name": "ناوی دوکان"
 }
