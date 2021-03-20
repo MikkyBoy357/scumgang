@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saydo/app_localizations.dart';
 
 class CartItem extends StatelessWidget {
   final String name;
@@ -70,7 +71,10 @@ class CartItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            name.isNotEmpty ? name : 'Name',
+                            name.isNotEmpty
+                                ? name
+                                : AppLocalizations.of(context)
+                                    .translate('name'),
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -78,7 +82,7 @@ class CartItem extends StatelessWidget {
                             maxLines: 2,
                           ),
                           Text(
-                            '$units Units',
+                            '$units ${AppLocalizations.of(context).translate('units')}',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

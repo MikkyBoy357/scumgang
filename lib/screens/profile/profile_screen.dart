@@ -109,7 +109,8 @@ class _ProfileState extends State<Profile> {
                                 style: MyTextStyles.profileTitle,
                               ),
                               subtitle: ProfileTextField(
-                                hintText: 'Name',
+                                hintText: AppLocalizations.of(context)
+                                    .translate('name'),
                                 onChanged: (value) {
                                   name = value;
                                   print('name: $name');
@@ -123,7 +124,8 @@ class _ProfileState extends State<Profile> {
                                 style: MyTextStyles.profileTitle,
                               ),
                               subtitle: ProfileTextField(
-                                hintText: 'Phone Number',
+                                hintText: AppLocalizations.of(context)
+                                    .translate('phone_number'),
                                 onChanged: (value) {
                                   phoneNumber = value;
                                   print('phoneNumber: $phoneNumber');
@@ -137,7 +139,8 @@ class _ProfileState extends State<Profile> {
                                 style: MyTextStyles.profileTitle,
                               ),
                               subtitle: ProfileTextField(
-                                hintText: 'Language',
+                                hintText: AppLocalizations.of(context)
+                                    .translate('language'),
                                 onChanged: (value) {
                                   language = value;
                                   print('language: $language');
@@ -151,7 +154,8 @@ class _ProfileState extends State<Profile> {
                                 style: MyTextStyles.profileTitle,
                               ),
                               subtitle: ProfileTextField(
-                                hintText: 'Location',
+                                hintText: AppLocalizations.of(context)
+                                    .translate('location'),
                                 onChanged: (value) {
                                   location = value;
                                   print('location: $location');

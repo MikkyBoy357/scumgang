@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:saydo/auth/login_screen.dart';
-import 'package:saydo/auth/number_verification.dart';
-import 'package:saydo/screens/language_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'app_localizations.dart';
@@ -49,7 +47,15 @@ class MyApp extends StatelessWidget {
         return supportedLocales.first;
       },
       // home: LoginScreen(),
-      home: NumberVerification(),
+      home: LoginScreen(),
+      builder: (context, child) {
+        return Directionality(
+          textDirection: AppLocalizations.userLocale == 'en'
+              ? TextDirection.ltr
+              : TextDirection.rtl,
+          child: child,
+        );
+      },
     );
   }
 }

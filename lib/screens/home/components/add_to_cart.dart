@@ -5,6 +5,8 @@ import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.
 import 'package:saydo/design_system/colors/colors.dart';
 import 'package:saydo/design_system/const.dart';
 
+import '../../../app_localizations.dart';
+
 class AddToCart extends StatefulWidget {
   final String adminId;
   final String name;
@@ -84,7 +86,7 @@ class _AddToCartState extends State<AddToCart> {
                   child: Row(
                     children: [
                       Text(
-                        'Quantity',
+                        AppLocalizations.of(context).translate('quantity'),
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -111,7 +113,10 @@ class _AddToCartState extends State<AddToCart> {
                             width: 10,
                           ),
                           Text(
-                            units > 1 ? 'Units' : 'Unit',
+                            units > 1
+                                ? AppLocalizations.of(context)
+                                    .translate('units')
+                                : 'Unit',
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,

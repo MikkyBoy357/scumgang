@@ -41,7 +41,7 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          'Waiting for Order',
+          AppLocalizations.of(context).translate('waiting_for_order'),
           style: TextStyle(color: Colors.black),
         ),
       ),
@@ -180,7 +180,7 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
                 ],
               ),
               Button1(
-                label: 'Home',
+                label: AppLocalizations.of(context).translate('home'),
                 onPressed: () {
                   Navigator.push(
                     context,

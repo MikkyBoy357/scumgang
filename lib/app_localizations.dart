@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppLocalizations {
+  static String userLocale;
   final Locale locale;
 
   AppLocalizations(this.locale);
@@ -21,6 +22,8 @@ class AppLocalizations {
   Future load() async {
     String jsonString =
         await rootBundle.loadString('lang/${locale.languageCode}.json');
+    userLocale = locale.languageCode;
+    print('=======> User Locale is $userLocale');
     print({'=======> Language is ${locale.languageCode}'});
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
