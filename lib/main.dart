@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:saydo/auth/login_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:saydo/screens/home/main_screen.dart';
 
 import 'app_localizations.dart';
 
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
         return supportedLocales.first;
       },
       // home: LoginScreen(),
-      home: LoginScreen(),
+      home: buildHome(),
       builder: (context, child) {
         return Directionality(
           textDirection: AppLocalizations.userLocale == 'en'
@@ -55,6 +57,20 @@ class MyApp extends StatelessWidget {
               : TextDirection.rtl,
           child: child,
         );
+      },
+    );
+  }
+
+  buildHome() {
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        if (snapshot.hasData) {
+          print(snapshot);
+          return MainScreen();
+        } else {
+          return LoginScreen();
+        }
       },
     );
   }

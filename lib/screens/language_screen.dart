@@ -3,6 +3,7 @@ import 'package:saydo/app_localizations.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/button_widgets/buttons/white_buttons/white_button1.dart';
 import 'package:saydo/auth/login_screen.dart';
+import 'package:saydo/design_system/const.dart';
 
 class LanguageScreen extends StatefulWidget {
   @override
@@ -40,6 +41,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
+                        print('${Const.uid}');
                         return LoginScreen();
                       },
                     ),

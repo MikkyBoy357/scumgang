@@ -64,7 +64,7 @@ class _NumberVerificationState extends State<NumberVerification> {
           _verificationCode = verificationID;
         });
       },
-      timeout: Duration(minutes: 5),
+      timeout: Duration(minutes: 2),
     );
   }
 
