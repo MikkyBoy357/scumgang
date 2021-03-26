@@ -9,6 +9,7 @@ import 'package:saydo/design_system/const.dart';
 import 'package:saydo/design_system/text_styles/text_styles.dart';
 import 'package:saydo/design_system/widgets/profile_text_field.dart';
 import 'package:saydo/screens/home/main_screen.dart';
+import 'package:saydo/screens/profile/components/update_location.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -147,19 +148,34 @@ class _ProfileState extends State<Profile> {
                                 },
                               ),
                             ),
-                            ListTile(
-                              title: Text(
-                                AppLocalizations.of(context)
-                                    .translate('location'),
-                                style: MyTextStyles.profileTitle,
-                              ),
-                              subtitle: ProfileTextField(
-                                hintText: AppLocalizations.of(context)
-                                    .translate('location'),
-                                onChanged: (value) {
-                                  location = value;
-                                  print('location: $location');
-                                },
+                            GestureDetector(
+                              onTap: () async {
+                                print(' here');
+                                var value = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return UpdateLocation();
+                                    },
+                                  ),
+                                );
+                                print(' Gotten');
+                                print(value);
+                              },
+                              child: ListTile(
+                                title: Text(
+                                  AppLocalizations.of(context)
+                                      .translate('location'),
+                                  style: MyTextStyles.profileTitle,
+                                ),
+                                subtitle: ProfileTextField(
+                                  hintText: AppLocalizations.of(context)
+                                      .translate('location'),
+                                  onChanged: (value) {
+                                    location = value;
+                                    print('location: $location');
+                                  },
+                                ),
                               ),
                             ),
                             ListTile(
@@ -228,20 +244,35 @@ class _ProfileState extends State<Profile> {
                               },
                             ),
                           ),
-                          ListTile(
-                            title: Text(
-                              AppLocalizations.of(context)
-                                  .translate('location'),
-                              style: MyTextStyles.profileTitle,
-                            ),
-                            subtitle: ProfileTextField(
-                              hintText: snapshot.data['location'] == ''
-                                  ? 'Location'
-                                  : snapshot.data['location'],
-                              onChanged: (value) {
-                                location = value;
-                                print('location: $location');
-                              },
+                          GestureDetector(
+                            onTap: () async {
+                              print(' here');
+                              var value = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return UpdateLocation();
+                                  },
+                                ),
+                              );
+                              print(' Gotten');
+                              print('Plus Code: $value');
+                            },
+                            child: ListTile(
+                              title: Text(
+                                AppLocalizations.of(context)
+                                    .translate('location'),
+                                style: MyTextStyles.profileTitle,
+                              ),
+                              subtitle: ProfileTextField(
+                                hintText: snapshot.data['location'] == ''
+                                    ? 'Location'
+                                    : snapshot.data['location'],
+                                onChanged: (value) {
+                                  // location = value;
+                                  print('location: $location');
+                                },
+                              ),
                             ),
                           ),
                           ListTile(

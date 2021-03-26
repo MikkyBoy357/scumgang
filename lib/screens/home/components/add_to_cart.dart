@@ -29,7 +29,7 @@ class _AddToCartState extends State<AddToCart> {
   @override
   void initState() {
     super.initState();
-    price = int.parse(widget.price);
+    price = int.parse(widget.price) * units;
     setState(() {});
   }
 

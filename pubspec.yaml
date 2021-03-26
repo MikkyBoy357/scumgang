@@ -35,6 +35,11 @@ dependencies:
   pinput: ^1.0.0
   cloud_firestore: ^0.16.0+1
   provider: ^4.3.2+3
+  geolocator: ^6.1.13
+  open_location_code:
+    git:
+      url: git://github.com/google/open-location-code.git
+      path: dart
 
 dev_dependencies:
   flutter_test:

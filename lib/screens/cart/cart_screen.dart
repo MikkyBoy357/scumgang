@@ -55,10 +55,21 @@ class _CartState extends State<Cart> {
     for (QueryDocumentSnapshot doc in snap.docs) {
       doc.reference.update(<String, dynamic>{
         'ordered': 'true',
+        'phoneNumber': Const.phoneNumber,
         'orderedTime': DateFormat('hh:mm aaa').format(DateTime.now()),
+        'location': userLocation,
       });
     }
     setState(() {});
+  }
+
+  getUserLocation() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(Const.uid)
+        .get();
+    print(snap.data()['location']);
+    userLocation = snap.data()['location'];
   }
 
   @override
@@ -67,9 +78,12 @@ class _CartState extends State<Cart> {
     cartPrice();
   }
 
+  String userLocation;
+
   @override
   Widget build(BuildContext context) {
-    cartPrice();
+    getUserLocation();
+    print('=======>$userLocation');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

@@ -6,18 +6,20 @@ class CartItem extends StatelessWidget {
   final String size;
   final int price;
   final String image;
-  final String orderedTime;
   final int units;
+  final String orderedTime;
+  final String location;
 
-  const CartItem(
-      {Key key,
-      this.name,
-      this.size,
-      this.price,
-      this.image,
-      this.units,
-      this.orderedTime})
-      : super(key: key);
+  const CartItem({
+    Key key,
+    this.name,
+    this.size,
+    this.price,
+    this.image,
+    this.units,
+    this.orderedTime,
+    this.location,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(

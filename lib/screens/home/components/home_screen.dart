@@ -24,7 +24,8 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('=======> UID: ${Const.uid}');
+    print(
+        '=======> UID: ${FirebaseFirestore.instance.collection('collectionName').get()}');
   }
 
   @override
@@ -137,6 +138,8 @@ class _HomeState extends State<Home> {
                           .collection('categories')
                           .snapshots(),
                       builder: (context, snapshot) {
+                        // print(snapshot.error);
+                        // print(snapshot.data);
                         if (!snapshot.hasData)
                           return Center(child: CircularProgressIndicator());
                         return Expanded(

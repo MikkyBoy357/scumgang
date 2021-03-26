@@ -1,9 +1,80 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
+import 'package:open_location_code/open_location_code.dart' as olc;
 
-class UpdateLocation extends StatelessWidget {
+class UpdateLocation extends StatefulWidget {
+  @override
+  _UpdateLocationState createState() => _UpdateLocationState();
+}
+
+class _UpdateLocationState extends State<UpdateLocation> {
+  String _location = '37.422062,-122.08406';
+
+  String _plusCode = '849VCWC8+R9GC';
+
+  String _locationDecoded = '37.422062499999996,-122.08405859375';
+
+  Future<Position> _getCurrentPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permantly denied, we cannot request permissions.');
+    }
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
+        return Future.error(
+            'Location permissions are denied (actual value: $permission).');
+      }
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
+
+  String _getPlusCode(Position from) {
+    return olc.encode(from.latitude, from.longitude, codeLength: 12);
+  }
+
+  Position _getPosition(String from) {
+    olc.CodeArea ca = olc.decode(from);
+    Position position =
+        Position(latitude: ca.center.latitude, longitude: ca.center.longitude);
+    return position;
+  }
+
+  void _locateMe() async {
+    Position pos = await _getCurrentPosition();
+    print('${pos.latitude},${pos.longitude}');
+    String plusCode = _getPlusCode(pos);
+    print(plusCode);
+    Position posDecoded = _getPosition(plusCode);
+    print('${posDecoded.latitude},${posDecoded.longitude}');
+    setState(() {
+      _location = '${pos.latitude},${pos.longitude}';
+      _plusCode = plusCode;
+      _locationDecoded = '${posDecoded.latitude},${posDecoded.longitude}';
+    });
+  }
+
+  TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    print(_plusCode);
+    _controller.text = _plusCode;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -40,6 +111,7 @@ class UpdateLocation extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 1.5,
                   child: TextField(
                     maxLength: 6,
+                    controller: _controller,
                     // textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       counterText: '',
@@ -65,29 +137,29 @@ class UpdateLocation extends StatelessWidget {
                 ),
               ),
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              ),
-              elevation: 4.0,
-              child: Container(
-                height: MediaQuery.of(context).size.height / 4.9,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  // border: Border.all(
-                  //   color: Color(0x90707070),
-                  // ),
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                  image: DecorationImage(
-                      image: AssetImage('images/map.png'), scale: 0.5
-                      // fit: BoxFit.cover,
-                      ),
-                ),
-                // child: Image(
-                //   image: AssetImage('images/image.png'),
-                // ),
-              ),
-            ),
+            // Card(
+            //   shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.all(Radius.circular(16)),
+            //   ),
+            //   elevation: 4.0,
+            //   child: Container(
+            //     height: MediaQuery.of(context).size.height / 4.9,
+            //     width: MediaQuery.of(context).size.width,
+            //     decoration: BoxDecoration(
+            //       // border: Border.all(
+            //       //   color: Color(0x90707070),
+            //       // ),
+            //       borderRadius: BorderRadius.all(Radius.circular(16)),
+            //       image: DecorationImage(
+            //           image: AssetImage('images/map.png'), scale: 0.5
+            //           // fit: BoxFit.cover,
+            //           ),
+            //     ),
+            //     // child: Image(
+            //     //   image: AssetImage('images/image.png'),
+            //     // ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -96,7 +168,31 @@ class UpdateLocation extends StatelessWidget {
         child: Button1(
           label: 'Update',
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context, _plusCode);
+            setState(() {
+              DocumentReference documentReference = FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(FirebaseAuth.instance.currentUser.uid);
+              print('=========> RANDOM LOG HAHAHAHAHA');
+              Map<String, String> categories = {
+                "location": _plusCode,
+              };
+              print("=======> Firestore Mapping");
+              print(categories.toString());
+              documentReference.update({"location": _plusCode}).whenComplete(
+                () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CupertinoAlertDialog(
+                        title: Text('SUCCESS'),
+                        content: Text('Location Added Successfully'),
+                      );
+                    },
+                  );
+                },
+              );
+            });
           },
         ),
       ),
