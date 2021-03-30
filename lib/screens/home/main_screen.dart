@@ -1,11 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:saydo/design_system/const.dart';
 import 'package:saydo/design_system/widgets/bottom_bar.dart';
 import 'package:saydo/screens/cart/cart_screen.dart';
 import 'package:saydo/screens/home/components/home_screen.dart';
 import 'package:saydo/screens/profile/profile_screen.dart';
 
+// ignore: must_be_immutable
 class MainScreen extends StatefulWidget {
+  var cartItemId;
   @override
   _MainScreenState createState() => _MainScreenState();
 }

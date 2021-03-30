@@ -7,6 +7,10 @@ class CartItem extends StatelessWidget {
   final int price;
   final String image;
   final int units;
+  final String ordered;
+  final String uid;
+  final String adminId;
+  final String cartId;
   final String orderedTime;
   final String location;
 
@@ -17,6 +21,10 @@ class CartItem extends StatelessWidget {
     this.price,
     this.image,
     this.units,
+    this.ordered,
+    this.uid,
+    this.adminId,
+    this.cartId,
     this.orderedTime,
     this.location,
   }) : super(key: key);

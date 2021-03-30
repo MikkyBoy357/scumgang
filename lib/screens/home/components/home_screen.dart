@@ -24,8 +24,9 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(
-        '=======> UID: ${FirebaseFirestore.instance.collection('collectionName').get()}');
+    // print(
+    //     '=======> UID: ${FirebaseFirestore.instance.collection('collectionName').get()}');
+    print('=======> UID: ${Const.uid}');
   }
 
   @override

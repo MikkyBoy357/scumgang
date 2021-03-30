@@ -9,6 +9,15 @@ import 'package:saydo/screens/home/main_screen.dart';
 import '../../app_localizations.dart';
 
 class WaitingForOrders extends StatefulWidget {
+  final String name;
+  final String size;
+  final String price;
+  final String image;
+  final String units;
+
+  const WaitingForOrders(
+      {Key key, this.name, this.size, this.price, this.image, this.units})
+      : super(key: key);
   @override
   _WaitingForOrdersState createState() => _WaitingForOrdersState();
 }

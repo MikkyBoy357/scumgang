@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -5,6 +7,7 @@ class Const {
   static var uid = FirebaseAuth.instance.currentUser.uid;
   static var phoneNumber = FirebaseAuth.instance.currentUser.phoneNumber;
   static var location;
+  static final cartItemId = "${Const.uid}" + "${DateTime.now().minute}";
   static Future<bool> checkExist() async {
     bool exists = false;
     try {

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:saydo/design_system/colors/colors.dart';
 import 'package:saydo/design_system/const.dart';
+import 'package:saydo/design_system/widgets/cart_item_cards/cart_item.dart';
 
 import '../../../app_localizations.dart';
+import 'cart/cartList.dart';
 
 class AddToCart extends StatefulWidget {
   final String adminId;
@@ -35,6 +37,8 @@ class _AddToCartState extends State<AddToCart> {
 
   @override
   Widget build(BuildContext context) {
+    var realCartId = "${Const.uid}" + "${DateTime.now().second}";
+
     print('AdminId: ${widget.adminId}');
     return Container(
       child: Padding(
@@ -169,38 +173,54 @@ class _AddToCartState extends State<AddToCart> {
             Button1(
               label: 'Add to Cart',
               onPressed: () {
-                setState(() {
-                  DocumentReference documentReference = FirebaseFirestore
-                      .instance
-                      .collection("cartItems")
-                      .doc("${Const.uid} ${DateTime.now()}");
-                  print('=========> RANDOM LOG HAHAHAHAHA');
-                  Map<String, dynamic> categories = {
-                    "name": widget.name,
-                    "size": widget.size,
-                    "price": price,
-                    "image": widget.image,
-                    "units": units,
-                    "ordered": 'false',
-                    "uid": Const.uid,
-                    "adminId": widget.adminId,
-                  };
-                  print("=======> Firestore Mapping");
-                  print(categories.toString());
-                  documentReference.set(categories).whenComplete(
-                    () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CupertinoAlertDialog(
-                            title: Text('SUCCESS'),
-                            content: Text('${widget.name} Added Successfully'),
-                          );
-                        },
-                      );
-                    },
-                  );
-                });
+                final cartItem = CartItem(
+                  name: widget.name,
+                  size: widget.size,
+                  price: price,
+                  image: widget.image,
+                  units: units,
+                  ordered: 'false',
+                  uid: Const.uid,
+                  adminId: widget.adminId,
+                  cartId: Const.cartItemId,
+                );
+                myCart.products.add(cartItem);
+                print(myCart.products[0].size);
+                print('Cart length: ${myCart.products.length}');
+                // setState(() {
+                //   DocumentReference documentReference = FirebaseFirestore
+                //       .instance
+                //       .collection("cartItems")
+                //       .doc(realCartId);
+                //   print('=========> RANDOM LOG HAHAHAHAHA');
+                //   print(Const.cartItemId);
+                //   Map<String, dynamic> categories = {
+                //     "name": widget.name,
+                //     "size": widget.size,
+                //     "price": price,
+                //     "image": widget.image,
+                //     "units": units,
+                //     "ordered": 'false',
+                //     "uid": Const.uid,
+                //     "adminId": widget.adminId,
+                //     "cartId": Const.cartItemId,
+                //   };
+                //   print("=======> Firestore Mapping");
+                //   print(categories.toString());
+                //   documentReference.set(categories).whenComplete(
+                //     () {
+                //       showDialog(
+                //         context: context,
+                //         builder: (context) {
+                //           return CupertinoAlertDialog(
+                //             title: Text('SUCCESS'),
+                //             content: Text('${widget.name} Added Successfully'),
+                //           );
+                //         },
+                //       );
+                //     },
+                //   );
+                // });
               },
             ),
             Container(
