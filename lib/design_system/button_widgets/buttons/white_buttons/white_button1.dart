@@ -3,9 +3,11 @@ import 'package:saydo/design_system/colors/colors.dart';
 
 class WhiteButton1 extends StatelessWidget {
   final String label;
+  final Function onPressed;
   const WhiteButton1({
     Key key,
     this.label,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class WhiteButton1 extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.0),
           side: BorderSide(color: Color(0xFFE6E6E6)),
         ),
-        onPressed: () {},
+        onPressed: onPressed,
         color: Colors.white,
         textColor: Colors.white,
         child: Text(

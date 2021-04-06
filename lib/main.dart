@@ -1,14 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:saydo/auth/login_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:saydo/screens/home/main_screen.dart';
+import 'package:saydo/screens/language_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppLocalizations.getAppLang();
+  print(await AppLocalizations.getAppLang());
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -66,10 +69,10 @@ class MyApp extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         if (snapshot.hasData) {
-          print(snapshot);
+          // print(snapshot);
           return MainScreen();
         } else {
-          return LoginScreen();
+          return LanguageScreen();
         }
       },
     );

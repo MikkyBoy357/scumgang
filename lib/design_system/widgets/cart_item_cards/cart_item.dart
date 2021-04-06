@@ -44,28 +44,28 @@ class CartItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Container(
-                height: 96,
-                width: 96,
-                decoration: BoxDecoration(
-                  // border: Border.all(
-                  //   color: Color(0x90707070),
-                  // ),
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                  image: DecorationImage(
-                    image: image.isEmpty
-                        ? AssetImage('images/image.png')
-                        : NetworkImage(image),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                // child: Image(
-                //   image: AssetImage('images/image.png'),
-                // ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(2.0),
+            //   child: Container(
+            //     height: 96,
+            //     width: 96,
+            //     decoration: BoxDecoration(
+            //       // border: Border.all(
+            //       //   color: Color(0x90707070),
+            //       // ),
+            //       borderRadius: BorderRadius.all(Radius.circular(16)),
+            //       image: DecorationImage(
+            //         image: image.isEmpty
+            //             ? AssetImage('images/image.png')
+            //             : NetworkImage(image),
+            //         fit: BoxFit.cover,
+            //       ),
+            //     ),
+            //     // child: Image(
+            //     //   image: AssetImage('images/image.png'),
+            //     // ),
+            //   ),
+            // ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),

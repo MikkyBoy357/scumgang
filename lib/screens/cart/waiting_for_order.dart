@@ -29,7 +29,7 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
     QuerySnapshot snap = await FirebaseFirestore.instance
         .collection('cartItems')
         .where('uid', isEqualTo: Const.uid)
-        .where('ordered', isEqualTo: 'true')
+        .where('delivered', isEqualTo: 'false')
         .get();
     for (QueryDocumentSnapshot doc in snap.docs) {
       totalPrice += doc.data()['price'];
@@ -82,9 +82,10 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
                     ),
                   ),
                   Container(
-                    height: 5.0,
+                    height: 30.0,
                   ),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'If you need help please call us by clicking ',
@@ -107,35 +108,32 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
             ),
             StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection('cartItems')
+                  .collection('carts')
+                  // .orderBy('orderedTime', descending: false)
                   .where('uid', isEqualTo: Const.uid)
-                  .where('ordered', isEqualTo: 'true')
+                  .where('delivered', isEqualTo: 'false')
                   .snapshots(),
               builder: (context, snapshot) {
-                // if (mich == false)
-                //   return Container(
-                //     height: MediaQuery.of(context).size.height / 2,
-                //     child: Center(
-                //       child: Text(
-                //         'Add Items you wish to buy here',
-                //         style: MyTextStyles.subtitleStyle,
-                //       ),
-                //     ),
-                //   );
                 if (!snapshot.hasData)
                   return Center(child: CircularProgressIndicator());
+                print('======> ${snapshot.data.docs.length}');
                 return Expanded(
                   child: ListView.builder(
                     itemCount: snapshot.data.docs.length,
-                    // ignore: missing_return
                     itemBuilder: (context, index) {
-                      // return CartItem();
+                      print('<><><><><>${Const.myCartLength}');
                       return CartItem(
-                        name: snapshot.data.docs[index]['name'],
-                        size: snapshot.data.docs[index]['size'],
-                        price: snapshot.data.docs[index]['price'],
-                        image: snapshot.data.docs[index]['image'],
-                        units: snapshot.data.docs[index]['units'],
+                        name: snapshot.data.docs[index]['cartFields'][0]
+                            ['name'],
+                        // .map((e) => e.values.join())
+                        // .join(','),
+                        size: snapshot.data.docs[index]['cartFields'][0]
+                            ['size'],
+                        price: snapshot.data.docs[0]['cartFields'][0]['price'],
+                        image: snapshot.data.docs[index]['cartFields'][0]
+                            ['image'],
+                        units: snapshot.data.docs[index]['cartFields'][0]
+                            ['units'],
                       );
                     },
                   ),

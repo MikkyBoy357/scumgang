@@ -14,7 +14,7 @@ class UpdateLocation extends StatefulWidget {
 class _UpdateLocationState extends State<UpdateLocation> {
   String _location = '37.422062,-122.08406';
 
-  String _plusCode = '849VCWC8+R9GC';
+  String _plusCode;
 
   String _locationDecoded = '37.422062499999996,-122.08405859375';
 
@@ -45,8 +45,10 @@ class _UpdateLocationState extends State<UpdateLocation> {
     return await Geolocator.getCurrentPosition();
   }
 
-  String _getPlusCode(Position from) {
-    return olc.encode(from.latitude, from.longitude, codeLength: 12);
+  Future<String> _getPlusCode() async {
+    Position pos = await _getCurrentPosition();
+    // print('<<<<>>>> ${_getPlusCode(pos)}');
+    return olc.encode(pos.latitude, pos.longitude, codeLength: 12);
   }
 
   Position _getPosition(String from) {
@@ -56,19 +58,19 @@ class _UpdateLocationState extends State<UpdateLocation> {
     return position;
   }
 
-  void _locateMe() async {
-    Position pos = await _getCurrentPosition();
-    print('${pos.latitude},${pos.longitude}');
-    String plusCode = _getPlusCode(pos);
-    print(plusCode);
-    Position posDecoded = _getPosition(plusCode);
-    print('${posDecoded.latitude},${posDecoded.longitude}');
-    setState(() {
-      _location = '${pos.latitude},${pos.longitude}';
-      _plusCode = plusCode;
-      _locationDecoded = '${posDecoded.latitude},${posDecoded.longitude}';
-    });
-  }
+  // _locateMe() async {
+  //   Position pos = await _getCurrentPosition();
+  //   print('${pos.latitude},${pos.longitude}');
+  //   String plusCode = _getPlusCode(pos);
+  //   print(plusCode);
+  //   Position posDecoded = _getPosition(plusCode);
+  //   print('${posDecoded.latitude},${posDecoded.longitude}');
+  //   setState(() {
+  //     _location = '${pos.latitude},${pos.longitude}';
+  //     _plusCode = plusCode;
+  //     _locationDecoded = '${posDecoded.latitude},${posDecoded.longitude}';
+  //   });
+  // }
 
   TextEditingController _controller = TextEditingController();
   @override
@@ -110,7 +112,7 @@ class _UpdateLocationState extends State<UpdateLocation> {
                 Container(
                   width: MediaQuery.of(context).size.width / 1.5,
                   child: TextField(
-                    maxLength: 6,
+                    enabled: false,
                     controller: _controller,
                     // textAlign: TextAlign.center,
                     decoration: InputDecoration(
@@ -131,7 +133,7 @@ class _UpdateLocationState extends State<UpdateLocation> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 40.0),
               child: Text(
-                'Press the map to select where your property is located',
+                'Press the update button to update your store location',
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -167,8 +169,14 @@ class _UpdateLocationState extends State<UpdateLocation> {
         padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20),
         child: Button1(
           label: 'Update',
-          onPressed: () {
-            Navigator.pop(context, _plusCode);
+          onPressed: () async {
+            print('<<<<>>>> ${await _getPlusCode()}');
+            await _getPlusCode();
+            Position pos = await _getCurrentPosition();
+            print('<<<<>>>> ${await _getPlusCode()}');
+            _plusCode = await _getPlusCode();
+            // var mich = await _locateMe();
+            // Navigator.pop(context, _plusCode);
             setState(() {
               DocumentReference documentReference = FirebaseFirestore.instance
                   .collection("users")
@@ -179,7 +187,7 @@ class _UpdateLocationState extends State<UpdateLocation> {
               };
               print("=======> Firestore Mapping");
               print(categories.toString());
-              documentReference.update({"location": _plusCode}).whenComplete(
+              documentReference.update(categories).whenComplete(
                 () {
                   showDialog(
                     context: context,
@@ -189,7 +197,7 @@ class _UpdateLocationState extends State<UpdateLocation> {
                         content: Text('Location Added Successfully'),
                       );
                     },
-                  );
+                  ).then((value) => Navigator.pop(context));
                 },
               );
             });

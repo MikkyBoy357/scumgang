@@ -12,6 +12,7 @@ class ProfileTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      enabled: false,
       textAlign: TextAlign.start,
       onChanged: onChanged,
       decoration: InputDecoration.collapsed(

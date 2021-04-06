@@ -8,7 +8,6 @@ import 'package:saydo/design_system/const.dart';
 import 'package:saydo/design_system/text_styles/text_styles.dart';
 import 'package:saydo/design_system/widgets/cart_item_cards/cart_item.dart';
 import 'package:saydo/screens/cart/waiting_for_order.dart';
-import 'package:intl/intl.dart';
 import 'package:saydo/screens/home/components/cart/cartList.dart';
 
 import '../../app_localizations.dart';
@@ -20,14 +19,15 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   bool mich = false;
+  bool profile = false;
   int totalPrice = 0;
 
   // Order variables
-  var orderItem;
-  var orderSize;
-  var orderPrice;
-  var orderImage;
-  var orderUnits;
+  var name;
+  var size;
+  var orderedPrice;
+  var image;
+  var units;
   var ordered;
   var uid;
   var adminId;
@@ -50,22 +50,73 @@ class _CartState extends State<Cart> {
     }
   }
 
-  // cartPrice() async {
-  //   QuerySnapshot snap = await FirebaseFirestore.instance
-  //       .collection('cartItems')
-  //       // .where('uid', isEqualTo: Const.uid)
-  //       .where('ordered', isEqualTo: 'false')
-  //       .where('cartId', isEqualTo: cartId)
-  //       .get();
-  //   for (QueryDocumentSnapshot doc in snap.docs) {
-  //     totalPrice += doc.data()['price'];
-  //     print(doc.data()['cartId']);
-  //     print(',..,${doc.data()['ordered']}');
-  //   }
-  //   setState(() {});
-  // }
+  Future<bool> checkProfileExist() async {
+    // bool exists = false;
+    try {
+      await FirebaseFirestore.instance
+          .doc("users/${Const.uid}")
+          .get()
+          .then((doc) {
+        if (doc.exists)
+          profile = true;
+        else
+          profile = false;
+      });
+      // print('=======> profile> $profile');
+      return profile;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // name = product.name;
+  // orderedPrice = product.price;
+  // ordered = product.ordered;
+  // size = product.size;
+  // ordered = product.price;
+  // image = product.image;
+  // units = product.units;
+  // uid = product.uid;
+  // adminId = product.adminId;
+  // cartOrderId = 1;
+  confirmOrders(String location) {
+    Const.myCartLength = cartId;
+    for (var product in myCart.products) {
+      name = product.name;
+      orderedPrice = product.price;
+      ordered = product.ordered;
+      size = product.size;
+      ordered = product.price;
+      image = product.image;
+      units = product.units;
+      uid = product.uid;
+      adminId = product.adminId;
+      cartOrderId = 1;
+      addCartItem(cartItems, location).then(
+        (value) => showDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: Text('Success'),
+              content: Text('\n\nOrder confirmed successfully'),
+            );
+          },
+        ),
+      );
+    }
+    // myCart.products.clear();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return WaitingForOrders();
+        },
+      ),
+    );
+  }
 
   cartPrice() async {
+    // int myId;
     int price = 0;
     for (var product in myCart.products) {
       price += product.price;
@@ -92,45 +143,39 @@ class _CartState extends State<Cart> {
   int myRandom = Random().nextInt(100000);
 
   // confirmOrder() async {
-  //   QuerySnapshot snap = await FirebaseFirestore.instance
-  //       .collection('cartItems')
-  //       .where('uid', isEqualTo: Const.uid)
-  //       .where('ordered', isEqualTo: 'false')
-  //       .where('cartId', isEqualTo: cartId)
-  //       .get();
-  //   for (QueryDocumentSnapshot doc in snap.docs) {
-  //     doc.reference.update(<String, dynamic>{
-  //       'ordered': 'true',
-  //       'phoneNumber': Const.phoneNumber,
-  //       'orderedTime': DateFormat('hh:mm aaa').format(DateTime.now()),
-  //       'location': userLocation,
-  //       'orderId': '${DateFormat('hh:mm aaa').format(DateTime.now())}$myRandom',
-  //     });
-  //   }
-  //   setState(() {});
-  //   // Add Cart Items to orders
-  //
-  //   // DocumentReference documentReference = FirebaseFirestore
-  //   //     .instance
-  //   //     .collection("cartItems")
-  //   //     .doc("${Const.uid}" + "${DateTime.now().second}");
-  //   // print('=========> RANDOM LOG HAHAHAHAHA');
-  //   // print(Const.cartItemId);
-  //   // Map<String, dynamic> categories = {
-  //   //   "name": widget.name,
-  //   //   "size": widget.size,
-  //   //   "price": price,
-  //   //   "image": widget.image,
-  //   //   "units": units,
-  //   //   "ordered": 'false',
-  //   //   "uid": Const.uid,
-  //   //   "adminId": widget.adminId,
-  //   //   "cartId": Const.cartItemId,
-  //   // };
-  //   // print("=======> Firestore Mapping");
-  //   // print(categories.toString());
-  //   // documentReference.set(categories);
-  // }
+  // for (var product in myCart.products) {
+  CollectionReference cartItems =
+      FirebaseFirestore.instance.collection('carts');
+
+  Future<void> addCartItem(CollectionReference cartItems, String location) {
+    // Call the cartItems CollectionReference to add a new cartItem
+    List prods = List();
+    for (CartItem item in myCart.products) {
+      prods.add({
+        'name': item.name,
+        'size': size,
+        'price': orderedPrice,
+        'image': image,
+        'units': units,
+        'ordered': ordered,
+        'uid': uid,
+        'adminId': adminId,
+        'cartId': cartId,
+      });
+    }
+
+    return cartItems
+        .doc('$cartId')
+        .set({
+          "cartFields": prods,
+          'orderedTime': DateTime.now().toIso8601String(),
+          'location': location,
+          'uid': Const.uid,
+          'delivered': 'false',
+        })
+        .then((value) => print("AddCartItem"))
+        .catchError((error) => print("Failed to add cartItems: $error"));
+  }
 
   getUserLocation() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance
@@ -144,29 +189,17 @@ class _CartState extends State<Cart> {
 
   var newIndex;
 
-  @override
-  initState() {
-    super.initState();
-    // cartPrice();
-    // orderedField();
-  }
-
   String userLocation;
-  String cartId = Const.cartItemId;
+  String cartId = "${DateTime.now().toIso8601String()}";
 
   @override
   Widget build(BuildContext context) {
+    checkProfileExist();
     cartPrice();
-    // orderedField();
-    // print(Random().nextInt(100000));
-    // print('<><><>$cartId');
-    // getUserLocation();
-    // print('=======>$userLocation');
-    // print('===>${Const.cartId}');
-    // orderedField();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         title: Text(
           AppLocalizations.of(context).translate('cart'),
@@ -189,28 +222,8 @@ class _CartState extends State<Cart> {
                 ),
               ),
             ),
-            StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('cartItems')
-                  .where('uid', isEqualTo: Const.uid)
-                  .where('ordered', isEqualTo: 'false')
-                  .where('cartId', isEqualTo: cartId)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                // print('>>>>>$cartId');
-                // print(snapshot.data.docs[0]['cartItemId']);
-                // if (mich == false)
-                //   return Container(
-                //     height: MediaQuery.of(context).size.height / 2,
-                //     child: Center(
-                //       child: Text(
-                //         'Add Items you wish to buy here',
-                //         style: MyTextStyles.subtitleStyle,
-                //       ),
-                //     ),
-                //   );
-                if (!snapshot.hasData)
-                  return Expanded(
+            myCart.products.isEmpty
+                ? Expanded(
                     child: Container(
                       child: Center(
                         child: Text(
@@ -219,119 +232,126 @@ class _CartState extends State<Cart> {
                         ),
                       ),
                     ),
-                  );
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: myCart.products.length,
-                    // ignore: missing_return
-                    itemBuilder: (context, index) {
-                      newIndex = index;
-                      // return CartItem();
-                      return CartItem(
-                        name: myCart.products[index].name,
-                        size: myCart.products[index].size,
-                        price: myCart.products[index].price,
-                        image: myCart.products[index].image,
-                        units: myCart.products[index].units,
-                      );
-                    },
+                  )
+                : Expanded(
+                    child: ListView.builder(
+                      itemCount: myCart.products.length,
+                      // ignore: missing_return
+                      itemBuilder: (context, index) {
+                        newIndex = index;
+                        // return CartItem();
+                        return CartItem(
+                          name: myCart.products[index].name,
+                          size: myCart.products[index].size,
+                          price: myCart.products[index].price,
+                          image: myCart.products[index].image,
+                          units: myCart.products[index].units,
+                        );
+                      },
+                    ),
                   ),
-                );
-              },
-            ),
           ],
         ),
       ),
-      bottomNavigationBar: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('cartItems')
-              .where('uid', isEqualTo: Const.uid)
-              .where('ordered', isEqualTo: 'false')
-              .where('cartId', isEqualTo: cartId)
-              .snapshots(),
-          builder: (context, snapshot) {
-            return Container(
-              height: MediaQuery.of(context).size.height * 0.170,
-              decoration: BoxDecoration(
-                border: Border.symmetric(
-                  horizontal: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context).translate('total'),
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'IQD ',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              '$totalPrice',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+      bottomNavigationBar: Container(
+        height: MediaQuery.of(context).size.height * 0.170,
+        decoration: BoxDecoration(
+          border: Border.symmetric(
+            horizontal: BorderSide(
+              color: Colors.grey,
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(context).translate('total'),
+                    style: TextStyle(
+                      fontSize: 18,
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.065,
-                      width: MediaQuery.of(context).size.width / 1.3,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          // side: BorderSide(color: Colors.red),
-                        ),
-                        onPressed: () {
-                          // confirmOrder();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return WaitingForOrders(
-                                    // name: snapshot.data.docs[newIndex]['name'],
-                                    // size: snapshot.data.docs[newIndex]['size'],
-                                    // price: snapshot.data.docs[newIndex]['price'],
-                                    // image: snapshot.data.docs[newIndex]['image'],
-                                    // units: snapshot.data.docs[newIndex]['units'],
-                                    );
-                              },
-                            ),
-                          );
-                        },
-                        color: MyColors.blue1,
-                        textColor: Colors.white,
-                        child: Text(
-                          AppLocalizations.of(context)
-                              .translate('confirm_order'),
-                          style: TextStyle(fontSize: 20),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'IQD ',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                      Text(
+                        '$totalPrice',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            );
-          }),
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(Const.uid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.065,
+                    width: MediaQuery.of(context).size.width / 1.3,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        // side: BorderSide(color: Colors.red),
+                      ),
+                      onPressed: () {
+                        // print(snapshot.data['location']);
+                        if (profile == true) {
+                          snapshot.data['location'] == null
+                              ? showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CupertinoAlertDialog(
+                                      title: Text('Error'),
+                                      content: Text(
+                                          '\n\nPlease go to the profile page and update your profile'),
+                                    );
+                                  },
+                                )
+                              : confirmOrders(snapshot.data['location']);
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CupertinoAlertDialog(
+                                title: Text('Error'),
+                                content: Text(
+                                    '\n\nPlease go to the profile page and update your profile'),
+                              );
+                            },
+                          );
+                        }
+                      },
+                      color: MyColors.blue1,
+                      textColor: Colors.white,
+                      child: Text(
+                        AppLocalizations.of(context).translate('confirm_order'),
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

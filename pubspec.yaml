@@ -40,6 +40,8 @@ dependencies:
     git:
       url: git://github.com/google/open-location-code.git
       path: dart
+  shared_preferences: ^0.5.12+4
+
 
   # Cart dependencies
   scoped_model:

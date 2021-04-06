@@ -25,7 +25,7 @@ class AddToCart extends StatefulWidget {
 }
 
 class _AddToCartState extends State<AddToCart> {
-  int units = 10;
+  int units = 1;
   int price = 0;
 
   @override
@@ -187,6 +187,15 @@ class _AddToCartState extends State<AddToCart> {
                 myCart.products.add(cartItem);
                 print(myCart.products[0].size);
                 print('Cart length: ${myCart.products.length}');
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CupertinoAlertDialog(
+                      title: Text('SUCCESS'),
+                      content: Text('${widget.name} Added Successfully'),
+                    );
+                  },
+                );
                 // setState(() {
                 //   DocumentReference documentReference = FirebaseFirestore
                 //       .instance

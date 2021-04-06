@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
@@ -8,7 +11,39 @@ class UpdatePhoneNumber extends StatefulWidget {
 }
 
 class _UpdatePhoneNumberState extends State<UpdatePhoneNumber> {
-  TextEditingController _controller = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  TextEditingController _countryCodeController = TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
+  var phoneNumber;
+
+  void updatePhoneNumber(BuildContext context) {
+    phoneNumber =
+        '+${_countryCodeController.text}${_phoneNumberController.text}';
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser.uid);
+    print('=========> RANDOM LOG HAHAHAHAHA');
+    Map<String, String> categories = {
+      "phoneNumber": phoneNumber,
+    };
+    print(phoneNumber);
+    print("=======> Firestore Mapping");
+    print(categories.toString());
+    documentReference.update(categories).whenComplete(
+      () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: Text('SUCCESS'),
+              content: Text('Phone number Added Successfully'),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +78,27 @@ class _UpdatePhoneNumberState extends State<UpdatePhoneNumber> {
                 ),
                 Row(
                   children: <Widget>[
+                    Text(
+                      '+',
+                      style: TextStyle(
+                        color: Colors.grey[500],
+                        fontSize: 18,
+                      ),
+                    ),
                     Container(
                       width: 50,
                       child: TextField(
+                        controller: _countryCodeController,
                         decoration: InputDecoration(
-                          hintText: '+964',
-                          hintStyle:
-                              TextStyle(fontSize: 18, color: Colors.black),
+                          hintText: '964',
+                          hintStyle: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[500],
+                          ),
                         ),
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
@@ -59,11 +107,13 @@ class _UpdatePhoneNumberState extends State<UpdatePhoneNumber> {
                     ),
                     Expanded(
                       child: TextField(
-                        controller: _controller,
+                        controller: _phoneNumberController,
                         decoration: InputDecoration(
                           hintText: 'Phone Number',
-                          hintStyle:
-                              TextStyle(fontSize: 18, color: Colors.grey[500]),
+                          hintStyle: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[500],
+                          ),
                         ),
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
@@ -86,6 +136,7 @@ class _UpdatePhoneNumberState extends State<UpdatePhoneNumber> {
         child: Button1(
           label: 'Update',
           onPressed: () {
+            updatePhoneNumber(context);
             Navigator.pop(context);
           },
         ),

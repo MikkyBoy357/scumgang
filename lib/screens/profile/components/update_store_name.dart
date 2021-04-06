@@ -5,11 +5,39 @@ import 'package:flutter/material.dart';
 import 'package:saydo/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 
 class UpdateStoreName extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  String storeName;
+
+  void updateStoreName(BuildContext context) {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser.uid);
+    print('=========> RANDOM LOG HAHAHAHAHA');
+    Map<String, String> categories = {
+      "storeName": storeName,
+    };
+    print("=======> Firestore Mapping");
+    print(categories.toString());
+    documentReference.update(categories).whenComplete(
+      () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: Text('SUCCESS'),
+              content: Text('Store Name Added Successfully'),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    String storeName;
-
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -72,28 +100,7 @@ class UpdateStoreName extends StatelessWidget {
         child: Button1(
           label: 'Update',
           onPressed: () {
-            DocumentReference documentReference = FirebaseFirestore.instance
-                .collection("users")
-                .doc(FirebaseAuth.instance.currentUser.uid);
-            print('=========> RANDOM LOG HAHAHAHAHA');
-            Map<String, String> categories = {
-              "storeName": storeName,
-            };
-            print("=======> Firestore Mapping");
-            print(categories.toString());
-            documentReference.set(categories).whenComplete(
-              () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return CupertinoAlertDialog(
-                      title: Text('SUCCESS'),
-                      content: Text('$storeName Added Successfully'),
-                    );
-                  },
-                );
-              },
-            );
+            updateStoreName(context);
             Navigator.pop(context);
           },
         ),
